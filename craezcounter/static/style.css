@@ -24,3 +24,10 @@ code {
 h1, h2, h3, h4, h5, h6 {
   font-family: Tahoma, sans-serif;
 }
+
+.error {
+  padding: 5px;
+  border: 1px solid #fbb;
+  color: #900;
+  background: #fdd;
+}

@@ -3,6 +3,7 @@
 {% block body %}
   <h1><img src="/static/logo.gif" alt="Cra-ezCounter" /></h1>
   {# ================ #}
+
   <p>Cra-ezCounter is an API which counts unique visitors on your web page.
      This has some features:</p>
 
@@ -11,6 +12,13 @@
     <li>EZ to embed a counter into your web page</li>
     <li>Not save your identities at all</li>
   </ul>
+
+  <h2>Already use it?</h2>
+  {# ~~~~~~~~~~~~~~~~~~ #}
+  <form action="/dashboard" method="get">
+    <label>Your counter key: <input type="text" name="key" /></label>
+    <button>Go to the dashboard</button>
+  </form>
 
   <h2>How to use?</h2>
   {# ~~~~~~~~~~~~~~ #}

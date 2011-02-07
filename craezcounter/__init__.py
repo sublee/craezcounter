@@ -48,9 +48,15 @@ class GenerationHandler(BaseHandler):
 
 class DashboardHandler(BaseHandler):
 
-    def get(self, key):
+    def get(self, key=None):
+        if not key:
+            return self.redirect('/%s/dashboard' % self.request.get('key'))
         counter = Counter.get(key)
-        self.render_template('dashboard.html', key=key, counter=counter)
+        if not counter:
+            reason = '%s is not registered counter.' % key
+            self.render_template('error.html', reason=reason)
+        else:
+            self.render_template('dashboard.html', key=key, counter=counter)
 
 
 class JsonpHandler(BaseHandler):
@@ -108,6 +114,7 @@ class EmbeddedHandler(BaseHandler):
 app = webapp.WSGIApplication([
     ('/', OverviewHandler),
     ('/generate', GenerationHandler),
+    ('/dashboard', DashboardHandler),
     ('/(.+)/dashboard', DashboardHandler),
     ('/(.+)/embed\.js', EmbedScriptHandler),
     ('/(.+)/embed', EmbeddedHandler),
