@@ -5,13 +5,17 @@
 
 {% block body %}
   <dl>
-    <dt>Your counter key</dt>
+    <dt><b>Your counter key</b></dt>
     <dd>{{ key }}</dd>
     <dt>Today visitors</dt>
     <dd>{{ counter.today }}</dd>
     <dt>Total visitors</dt>
     <dd>{{ counter.total }}</dd>
-    <dt>Counter URL</dt>
-    <dd>http://anywhere-counter.appspot.com/{{ key }}.js</dd>
+    <dt>Dashboard</dt>
+    <dd>{{ request.url }}</dd>
+    <dt>Embed script</dt>
+    <dd><pre><code>&lt;script src=&quot;http://{{ request.host }}/{{ key }}/embed.js&quot;&gt;&lt;/script&gt;</code></pre></dd>
+    <dt>Load JSONP</dt>
+    <dd><pre><code>&lt;script src=&quot;http://{{ request.host }}/{{ key }}/jsonp?callback=<b>functionName</b>&quot;&gt;&lt;/script&gt;</code></pre></dd>
   </dl>
 {% endblock %}

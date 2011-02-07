@@ -8,7 +8,8 @@ from craezcounter.models import *
 from craezcounter.timer import *
 
 
-DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDgsSB0NvdW50ZXIY_goM'
+DEV_DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDgsSB0NvdW50ZXIY_goM'
+DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDgsSB0NvdW50ZXIYgAsM'
 
 
 class BaseHandler(webapp.RequestHandler):
@@ -25,7 +26,11 @@ class BaseHandler(webapp.RequestHandler):
 class OverviewHandler(BaseHandler):
 
     def get(self):
-        self.render_template('index.html', key=DEMO_KEY)
+        if not self.request.host.endswith('.appspot.com'):
+            key = DEV_DEMO_KEY
+        else:
+            key = DEMO_KEY
+        self.render_template('index.html', key=key)
 
 
 class GenerationHandler(BaseHandler):
@@ -38,7 +43,7 @@ class GenerationHandler(BaseHandler):
         counter.check_cookie = bool(self.request.get('check-cookie'))
         counter.check_ip = bool(self.request.get('check-ip'))
         counter.put()
-        self.redirect('/dashboard/%s' % counter.key())
+        self.redirect('/%s/dashboard' % counter.key())
 
 
 class DashboardHandler(BaseHandler):
@@ -103,7 +108,7 @@ class EmbeddedHandler(BaseHandler):
 app = webapp.WSGIApplication([
     ('/', OverviewHandler),
     ('/generate', GenerationHandler),
-    ('/dashboard/(.+)', DashboardHandler),
+    ('/(.+)/dashboard', DashboardHandler),
     ('/(.+)/embed\.js', EmbedScriptHandler),
     ('/(.+)/embed', EmbeddedHandler),
     ('/(.+)/jsonp', JsonpHandler),
