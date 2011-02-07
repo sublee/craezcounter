@@ -9,7 +9,7 @@ from craezcounter.timer import *
 
 
 DEV_DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDgsSB0NvdW50ZXIY_goM'
-DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDgsSB0NvdW50ZXIYgAsM'
+DEMO_KEY = 'agxjcmFlemNvdW50ZXJyDQsSB0NvdW50ZXIYAQw'
 
 
 class BaseHandler(webapp.RequestHandler):
