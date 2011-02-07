@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block css %}/static/counter.css{% endblock %}
+
+{% block body %}
+  <span class="counter">
+    <span class="border-mid">
+      <span class="border-inner">
+        <span class="numbers">
+          <span class="text"></span>
+          <span class="number">
+            <span class="seg seg-a"></span>
+            <span class="seg seg-b"></span>
+            <span class="seg seg-c"></span>
+            <span class="seg seg-d"></span>
+            <span class="seg seg-e"></span>
+            <span class="seg seg-f"></span>
+            <span class="seg seg-g"></span>
+          </span>
+        </span>
+      </span>
+    </span>
+  </span>
+  <script>
+    function drawCounter( counter ) {
+      var total = "" + counter.total,
+        display = $( ".counter .numbers" ),
+        prototype = display.find( "> .number" );
+      display.find( "> .text" ).text( total );
+      var segs = [
+        "abcdef",  // 0
+        "bc",      // 1
+        "abdeg",   // 2
+        "abcdg",   // 3
+        "bcfg",    // 4
+        "acdfg",   // 5
+        "acdefg",  // 6
+        "abc",     // 7
+        "abcdefg", // 8
+        "abcdfg"   // 9
+      ];
+      prototype.remove();
+      $.each( total.split( "" ), function( i, c ) {
+        var n = prototype.clone();
+        $.each( segs[ parseInt( c ) ].split( "" ), function( i, seg ) {
+          n.addClass( seg );
+        });
+        n.appendTo( display );
+      });
+    }
+  </script>
+  <script src="http://{{ request.host }}/{{ key }}/jsonp?callback=drawCounter">
+  </script>
+{% endblock %}

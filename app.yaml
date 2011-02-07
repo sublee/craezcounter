@@ -1,0 +1,15 @@
+application: craezcounter
+version: 0-1-dev
+runtime: python
+api_version: 1
+
+handlers:
+- url: /favicon.ico
+  static_files: craezcounter/static/favicon.ico
+  upload: craezcounter/static/favicon.ico
+
+- url: /static
+  static_dir: craezcounter/static
+
+- url: /.*
+  script: app.py

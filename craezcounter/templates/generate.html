@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Register a new counter
+&mdash; {{ block.super }}{% endblock %}
+
+{% block body %}
+  <form method="post">
+    <p>How to check unique visitor?</p>
+    <label><input type="checkbox" name="check-cookie" value="1" />
+      Check cookie</label>
+    <label><input type="checkbox" name="check-ip" value="1" />
+      Check IP</label>
+    <br />
+    <button type="submit">Generate</button>
+  </form>
+{% endblock %}

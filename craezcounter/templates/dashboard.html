@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard
+&mdash; {{ block.super }}{% endblock %}
+
+{% block body %}
+  <dl>
+    <dt>Your counter key</dt>
+    <dd>{{ key }}</dd>
+    <dt>Today visitors</dt>
+    <dd>{{ counter.today }}</dd>
+    <dt>Total visitors</dt>
+    <dd>{{ counter.total }}</dd>
+    <dt>Counter URL</dt>
+    <dd>http://anywhere-counter.appspot.com/{{ key }}.js</dd>
+  </dl>
+{% endblock %}

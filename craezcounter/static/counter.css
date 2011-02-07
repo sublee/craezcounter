@@ -1,0 +1,65 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+span {
+  display: block;
+}
+
+.counter {
+  border: 1px solid;
+  border-color: #99f #93f #93f #99f;
+  line-height: 10px;
+  background: #000;
+}
+
+.counter .border-mid {
+  border: 1px solid #96f;
+}
+
+.counter .border-inner {
+  position: relative;
+  border: 1px solid;
+  border-color: #93f #99f #99f #93f;
+  overflow: hidden;
+  background-position: right top;
+  background-repeat: repeat-x;
+}
+
+.counter .border-inner, .counter .seg {
+  height: 12px;
+  background-image: url(/static/7seg.gif);
+}
+
+.counter .numbers {
+  float: right;
+}
+
+.counter .number {
+  position: relative;
+  float: left;
+  width: 9px;
+  height: 12px;
+}
+
+.counter .seg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: url(/static/7seg.gif) 0 12px no-repeat;
+}
+.counter .a .seg-a { background-position: 0 -12px; }
+.counter .b .seg-b { background-position: 0 -24px; }
+.counter .c .seg-c { background-position: 0 -36px; }
+.counter .d .seg-d { background-position: 0 -48px; }
+.counter .e .seg-e { background-position: 0 -60px; }
+.counter .f .seg-f { background-position: 0 -72px; }
+.counter .g .seg-g { background-position: 0 -84px; }
+
+.counter .text {
+  position: absolute;
+  text-indent: -9999px;
+}

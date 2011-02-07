@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1><img src="/static/logo.gif" alt="Cra-ezCounter" /></h1>
+  {# ================ #}
+  <p>Cra-ezCounter is an API which counts unique visitors on your web page.
+     This has some features:</p>
+
+  <ul>
+    <li>EZ to generate a counter</li>
+    <li>EZ to embed a counter into your web page</li>
+    <li>Not save your identities at all</li>
+  </ul>
+
+  <h2>How to use?</h2>
+  {# ~~~~~~~~~~~~~~ #}
+  <h3>Generate a counter</h3>
+  {# --------------------- #}
+  <p>First of all, you need to generate your own counter in
+     <a href="/generate">this page</a>. There are two options for checking an
+     unique visitor. You can select one or both or nothing. After selected
+     options, click the "Generate" button. Then you will get your own counter.
+     DON'T FORGET your counter key.</p>
+
+  <h3>Use default but yearned design</h3>
+  {# --------------------------------- #}
+  <p>Do you remember web counter components in the early 2000's? I very very
+     miss their looks. So I made Cra-ezCounter's default design to be the early
+     2000's style. To use it, just append these code into your web page.</p>
+
+  <pre><code>&lt;script src=&quot;http://{{ request.host }}/<b>YOUR_COUNTER_KEY</b>/embed.js&quot;&gt;&lt;/script&gt;</code></pre>
+  <script src="/{{ key }}/embed.js"></script>
+
+  <p>If you want to specify its width, add a <code>width</code> argument.</p>
+
+  <pre><code>&lt;script src=&quot;http://{{ request.host }}/YOUR_COUNTER_KEY/embed.js<b>?width=60</b>&quot;&gt;&lt;/script&gt;</code></pre>
+  <script src="/{{ key }}/embed.js?width=60"></script>
+
+  <p>Or wrap it with some container:</p>
+
+  <pre><code><b>&lt;div style=&quot;width: 96px;&quot;&gt;</b>&lt;script src=&quot;http://{{ request.host }}/YOUR_COUNTER_KEY/embed.js&quot;&gt;&lt;/script&gt;<b>&lt;/div&gt;</b></code></pre>
+  <div style="width: 96px;"><script src="/{{ key }}/embed.js"></script></div>
+
+  <h3>Use your own design</h3>
+  {# ----------------------- #}
+
+  <p>Cra-ezCounter provides JSONP type. So you could implement customized
+     drawing function. For example:</p>
+
+  <pre><code>function drawCounter( counter ) {
+    document.write( &quot;&lt;div class='counter'&gt;Today: &quot; + counter.today + &quot;, Total: &quot; + counter.total + &quot;&lt;/div&gt;&quot; );
+}</code></pre>
+
+  <p>After implemented a drawing function, load your counter as JSONP.</p>
+
+  <pre><code>&lt;script src=&quot;http://{{ request.host }}/YOUR_COUNTER_KEY/jsonp?callback=<b>drawCounter</b>&quot;&gt;&lt;/script&gt;</code></pre>
+
+  <script>
+  function drawCounter( counter ) {
+    var tag = "<div class='counter'>Today: " + counter.today;
+    tag += ", Total: " + counter.total + "</div>";
+    document.write( tag );
+  }
+  </script>
+  <script src="/{{ key }}/jsonp?callback=drawCounter"></script>
+
+  <p>The data structure is here:</p>
+
+  <table border="1">
+    <tr>
+      <th>total</th>
+      <td>Number of total visitors</td>
+    </tr>
+    <tr>
+      <th>today</th>
+      <td>Number of today's visitors</td>
+    </tr>
+  </table>
+
+  <hr />
+
+  <p>I'm <a href="http://subl.ee/">Heungsub Lee</a>. And you can fork it on
+     <a href="https://github.com/sublee/craezcounter">the GitHub
+     repository</a>.</p>
+{% endblock %}
