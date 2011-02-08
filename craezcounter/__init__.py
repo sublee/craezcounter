@@ -88,6 +88,7 @@ class JsonpHandler(BaseHandler):
             data = dict(success=True, total=counter.total, today=counter.today)
         except Exception, e:
             data = dict(success=False, error=type(e).__name__, reason=str(e))
+        self.response.headers.add_header('Content-Type', 'text/javascript')
         self.response.out.write('%s(%s)' % (jsonp, simplejson.dumps(data)))
 
     def set_cookie(self, name, value, expires=None):
