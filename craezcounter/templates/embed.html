@@ -35,7 +35,8 @@
         "abc",     // 7
         "abcdefg", // 8
         "abcfg"    // 9
-      ];
+      ],
+      delay = 1000;
     function display( segs ) {
       var cell = prototype.clone();
       $.each( segs.split( "" ), function( i, on ) {
@@ -50,8 +51,17 @@
     }
     function drawCounter( counter ) {
       if ( counter.success ) {
-        var total = "" + counter.total;
-        row.find( "> .text" ).text( total );
+        var total = "" + counter.total,
+          text = row.find( "> .text" );
+
+        if ( text.text() !== total ) {
+          delay /= 2;
+        } else {
+          delay *= 2;
+        }
+        row.children().remove( ".display" );
+        text.text( total );
+
         $.each( total.split( "" ), function( i, c ) {
           display( numbers[ parseInt( c ) ] );
         });
@@ -61,8 +71,19 @@
           row.toggle();
         }, 500 );
       }
+
+      var loadCounter = $( ".load-counter" ),
+        src = loadCounter.attr( "src" ),
+        readonly = "&readonly=readonly";
+      if ( !(new RegExp( readonly + "$" )).exec( src ) ) {
+        loadCounter.attr( "src", src + readonly );
+      }
+      setTimeout(function() {
+        loadCounter.clone().appendTo( document.body );
+      }, delay );
     }
   </script>
-  <script src="http://{{ request.host }}/{{ key }}/jsonp?callback=drawCounter">
+  <script class="load-counter"
+    src="http://{{ request.host }}/{{ key }}/jsonp?callback=drawCounter">
   </script>
 {% endblock %}
