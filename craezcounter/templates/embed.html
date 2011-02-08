@@ -8,7 +8,7 @@
       <span class="border-inner">
         <span class="numbers">
           <span class="text"></span>
-          <span class="number">
+          <span class="display">
             <span class="seg seg-a"></span>
             <span class="seg seg-b"></span>
             <span class="seg seg-c"></span>
@@ -22,12 +22,9 @@
     </span>
   </span>
   <script>
-    function drawCounter( counter ) {
-      var total = "" + counter.total,
-        display = $( ".counter .numbers" ),
-        prototype = display.find( "> .number" );
-      display.find( "> .text" ).text( total );
-      var segs = [
+    var prototype = $( ".display" ).remove(),
+      row = $( ".numbers" ),
+      numbers = [
         "abcdef",  // 0
         "bc",      // 1
         "abdeg",   // 2
@@ -39,14 +36,28 @@
         "abcdefg", // 8
         "abcfg"    // 9
       ];
-      prototype.remove();
-      $.each( total.split( "" ), function( i, c ) {
-        var n = prototype.clone();
-        $.each( segs[ parseInt( c ) ].split( "" ), function( i, seg ) {
-          n.addClass( seg );
-        });
-        n.appendTo( display );
+    function display( segs ) {
+      var cell = prototype.clone();
+      $.each( segs.split( "" ), function( i, on ) {
+        cell.addClass( on );
       });
+      cell.appendTo( row );
+    }
+    function displayArray( segsArray ) {
+      $.each( segsArray, function( i, segs ) {
+        display( segs );
+      });
+    }
+    function drawCounter( counter ) {
+      if ( counter.success ) {
+        var total = "" + counter.total;
+        row.find( "> .text" ).text( total );
+        $.each( total.split( "" ), function( i, c ) {
+          display( numbers[ parseInt( c ) ] );
+        });
+      } else {
+        displayArray([ "adefg", "eg", "eg", "cdeg", "eg" ]);
+      }
     }
   </script>
   <script src="http://{{ request.host }}/{{ key }}/jsonp?callback=drawCounter">

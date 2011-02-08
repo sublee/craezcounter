@@ -76,12 +76,34 @@
 
   <table border="1">
     <tr>
+      <th>success</th>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
       <th>total</th>
-      <td>Number of total visitors</td>
+      <td>A number of total visitors</td>
     </tr>
     <tr>
       <th>today</th>
-      <td>Number of today's visitors</td>
+      <td>A number of today's visitors</td>
+    </tr>
+  </table>
+
+  <p>If the counter has an error, it will send an error information such
+     as:</p>
+
+  <table border="1">
+    <tr>
+      <th>success</th>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <th>error</th>
+      <td>An exception class name</td>
+    </tr>
+    <tr>
+      <th>reason</th>
+      <td>An exception message</td>
     </tr>
   </table>
 

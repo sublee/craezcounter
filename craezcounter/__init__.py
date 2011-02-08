@@ -63,26 +63,31 @@ class DashboardHandler(BaseHandler):
 class JsonpHandler(BaseHandler):
 
     def get(self, key):
-        counter = Counter.get(key)
-        hit = True
-        # check a cookie
-        if counter.check_cookie:
-            if self.request.cookies.get(key):
-                hit = False
-            else:
-                self.set_cookie(key, 1, tomorrow())
-        # check a memcache
-        if counter.check_ip:
-            key = '%s-%s' % (key, self.request.remote_addr)
-            hashed_key = hashlib.sha1(key).hexdigest()
-            if memcache.get(hashed_key):
-                hit = False
-            else:
-                memcache.set(hashed_key, True, restsec())
-        if hit:
-            self.hit(counter)
         jsonp = self.request.get('callback')
-        data = dict(total=counter.total, today=counter.today)
+        readonly = self.request.get('readonly')
+        try:
+            counter = Counter.get(key)
+            if not readonly:
+                hit = True
+                # check a cookie
+                if counter.check_cookie:
+                    if self.request.cookies.get(key):
+                        hit = False
+                    else:
+                        self.set_cookie(key, 1, tomorrow())
+                # check a memcache
+                if counter.check_ip:
+                    key = '%s-%s' % (key, self.request.remote_addr)
+                    hashed_key = hashlib.sha1(key).hexdigest()
+                    if memcache.get(hashed_key):
+                        hit = False
+                    else:
+                        memcache.set(hashed_key, True, restsec())
+                if hit:
+                    self.hit(counter)
+            data = dict(success=True, total=counter.total, today=counter.today)
+        except Exception, e:
+            data = dict(success=False, error=type(e).__name__, reason=str(e))
         self.response.out.write('%s(%s)' % (jsonp, simplejson.dumps(data)))
 
     def set_cookie(self, name, value, expires=None):
