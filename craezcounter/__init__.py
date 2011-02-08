@@ -4,6 +4,7 @@ from django.utils import simplejson
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
+from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 from craezcounter.models import *
 from craezcounter.timer import *
 
@@ -93,7 +94,10 @@ class JsonpHandler(BaseHandler):
     def hit(self, counter):
         counter.today += 1
         counter.total += 1
-        counter.put()
+        try:
+            counter.put()
+        except CapabilityDisabledError:
+            pass
         return counter
 
 
