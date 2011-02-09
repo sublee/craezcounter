@@ -55,9 +55,9 @@
           text = row.find( "> .text" );
 
         if ( text.text() !== total ) {
-          delay /= 2;
+          delay -= 20;
         } else {
-          delay *= 2;
+          delay += 10;
         }
         row.children().remove( ".display" );
         text.text( total );
